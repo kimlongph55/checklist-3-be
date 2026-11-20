@@ -606,14 +606,17 @@
       }
       document.getElementById("todayLabel").textContent = todayText();
 
-      /* Ngôi sao 3D: thân sao gradient vàng nhiều lớp, nửa trái sáng hơn tạo khối,
-         sao nhỏ nổi ở giữa, điểm sáng bóng ở cánh trên trái */
+      /* Ngôi sao 3D kiểu emoji ⭐: cả 5 đầu sao đều BO TRÒN (không nhọn) —
+         mỗi đầu là một đường cong Q ôm qua đỉnh sao, thân sao mập và mềm như emoji;
+         vẫn giữ nguyên gradient vàng nhiều lớp tạo khối 3D, nửa trái sáng hơn,
+         sao nhỏ nổi ở giữa, điểm sáng bóng ở cánh trên trái và mọi hiệu ứng
+         nảy / phát sáng / tia lung linh quanh sao */
       var STAR_HTML =
         "<svg class=\"star-3d\" viewBox=\"0 0 100 100\" aria-hidden=\"true\" focusable=\"false\">" +
-        "<path d=\"M50 4 L62.5 36.5 L96.5 37.5 L69 57.5 L78.8 92 L50 72.5 L21.2 92 L31 57.5 L3.5 37.5 L37.5 36.5 Z\" fill=\"url(#starGold)\" stroke=\"#b45309\" stroke-width=\"3\" stroke-linejoin=\"round\"/>" +
-        "<path d=\"M50 4 L50 72.5 L21.2 92 L31 57.5 L3.5 37.5 L37.5 36.5 Z\" fill=\"#ffffff\" opacity=\"0.22\"/>" +
-        "<path d=\"M50 23 L56.8 40.5 L75.5 41 L60.8 52.5 L66 70.5 L50 60.5 L34 70.5 L39.2 52.5 L24.5 41 L43.2 40.5 Z\" fill=\"url(#starInner)\" opacity=\"0.92\"/>" +
-        "<ellipse cx=\"37\" cy=\"29\" rx=\"9\" ry=\"5\" transform=\"rotate(-32 37 29)\" fill=\"#ffffff\" opacity=\"0.75\"/>" +
+        "<path d=\"M46.7 14 Q50 6.5 53.3 14 L63 35 L85.5 37.2 Q93.5 38 87 42.8 L69 57 L74.3 81 Q76.5 89.5 69.5 84.5 L50 71 L30.5 84.5 Q23.5 89.5 25.7 81 L31 57 L13 42.8 Q6.5 38 14.5 37.2 L37 35 Z\" fill=\"url(#starGold)\" stroke=\"#b45309\" stroke-width=\"4\" stroke-linejoin=\"round\"/>" +
+        "<path d=\"M46.7 14 Q50 6.5 50 71 L30.5 84.5 Q23.5 89.5 25.7 81 L31 57 L13 42.8 Q6.5 38 14.5 37.2 L37 35 Z\" fill=\"#ffffff\" opacity=\"0.22\"/>" +
+        "<path d=\"M48.3 29.8 Q50 25.5 51.7 29.8 L57 41 L68.3 41.8 Q72.5 42 69 44.8 L60 53 L62.3 63.5 Q63.8 68 59.8 65 L50 59 L40.2 65 Q36.2 68 37.7 63.5 L40 53 L31 44.8 Q27.5 42 31.7 41.8 L43 41 Z\" fill=\"url(#starInner)\" stroke=\"url(#starInner)\" stroke-width=\"2\" stroke-linejoin=\"round\" opacity=\"0.92\"/>" +
+        "<ellipse cx=\"38\" cy=\"30\" rx=\"8.5\" ry=\"4.6\" transform=\"rotate(-32 38 30)\" fill=\"#ffffff\" opacity=\"0.75\"/>" +
         "</svg>" +
         "<span class=\"twinkles\" aria-hidden=\"true\"><i class=\"tw t1\">✦</i><i class=\"tw t2\">✦</i><i class=\"tw t3\">✧</i></span>";
       /* Chùm tia sáng bung ra khi tick: [bay ngang px, bay dọc px, cỡ, góc xoay, trễ giây] */
