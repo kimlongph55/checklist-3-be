@@ -82,7 +82,7 @@
       }
       .hero .sub { margin: 2px 0 0; color: var(--text-soft); font-weight: 600; }
 
-      /* ---------- Cầu vồng nhỏ hai bên tiêu đề (bản cũ): trái giữ nguyên, phải lật ngược ---------- */
+      /* ---------- Cầu vồng emoji hai bên tiêu đề (phiên bản đầu): trái giữ nguyên, phải lật ngược ---------- */
       .hero h1 {
         display: flex;
         align-items: center;
@@ -91,9 +91,9 @@
       }
       .title-rainbow {
         flex: none;
-        width: clamp(36px, 7.5vw, 54px);
-        height: auto;
-        display: block;
+        display: inline-block;
+        font-size: 0.92em;
+        line-height: 1;
       }
       /* Cầu vồng bên phải lật ngược (gương ngang) so với bên trái */
       .title-rainbow.right { transform: scaleX(-1); }
@@ -266,7 +266,7 @@
   <body>
     <main class="wrap">
       <header class="hero">
-        <h1><svg class="title-rainbow left" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M16 100 A84 84 0 0 1 100 16" fill="none" stroke="#ff6b81" stroke-width="14"/><path d="M30 100 A70 70 0 0 1 100 30" fill="none" stroke="#ffa94d" stroke-width="14"/><path d="M44 100 A56 56 0 0 1 100 44" fill="none" stroke="#ffd93c" stroke-width="14"/><path d="M58 100 A42 42 0 0 1 100 58" fill="none" stroke="#51cf66" stroke-width="14"/><path d="M72 100 A28 28 0 0 1 100 72" fill="none" stroke="#4dabf7" stroke-width="14"/><path d="M86 100 A14 14 0 0 1 100 86" fill="none" stroke="#b197fc" stroke-width="14"/></svg><span>Bảng kế hoạch của bé</span><svg class="title-rainbow right" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M16 100 A84 84 0 0 1 100 16" fill="none" stroke="#ff6b81" stroke-width="14"/><path d="M30 100 A70 70 0 0 1 100 30" fill="none" stroke="#ffa94d" stroke-width="14"/><path d="M44 100 A56 56 0 0 1 100 44" fill="none" stroke="#ffd93c" stroke-width="14"/><path d="M58 100 A42 42 0 0 1 100 58" fill="none" stroke="#51cf66" stroke-width="14"/><path d="M72 100 A28 28 0 0 1 100 72" fill="none" stroke="#4dabf7" stroke-width="14"/><path d="M86 100 A14 14 0 0 1 100 86" fill="none" stroke="#b197fc" stroke-width="14"/></svg></h1>
+        <h1><span class="title-rainbow left" aria-hidden="true">🌈</span><span>Bảng kế hoạch của bé</span><span class="title-rainbow right" aria-hidden="true">🌈</span></h1>
         <p class="date" id="todayLabel">Hôm nay</p>
         <p class="sub">Bé chạm thẳng vào ô trống trong ảnh để tick ✓ khi làm xong nhé! Chạm lại vào ô đó để bỏ tick.</p>
         <div class="kids" role="group" aria-label="Chọn bé">
