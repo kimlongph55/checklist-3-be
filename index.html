@@ -230,12 +230,14 @@
         0%, 100% { border-color: rgba(28, 109, 217, 0); }
         50% { border-color: rgba(28, 109, 217, 0.45); }
       }
-      /* Ngôi sao vàng khối nổi: gradient nhiều lớp + bóng đổ + điểm sáng bóng ở góc trên */
-      .img-tick .star-3d {
-        width: 96%; height: 96%;
+      /* Emoji ⭐ thật làm dấu tick: đầu sao tròn phồng đúng như emoji,
+         nổi khối 3D bằng bóng đổ nhiều lớp + phát sáng quanh viền sao */
+      .img-tick { container-type: size; }
+      .img-tick .star-emoji {
         display: none;
-        overflow: visible;
-        filter: drop-shadow(0 3px 3px rgba(146, 64, 14, 0.5)) drop-shadow(0 0 7px rgba(255, 183, 3, 0.55));
+        font-size: 92cqw;
+        line-height: 1;
+        filter: drop-shadow(0 3px 3px rgba(146, 64, 14, 0.55)) drop-shadow(0 0 7px rgba(255, 183, 3, 0.6));
       }
       .img-tick.done {
         background: radial-gradient(circle at 50% 42%, rgba(255, 246, 190, 0.8), rgba(255, 213, 79, 0.4) 62%, rgba(255, 183, 3, 0.14));
@@ -243,7 +245,7 @@
         box-shadow: 0 0 0 2px rgba(255, 201, 60, 0.35), 0 0 16px rgba(255, 183, 3, 0.45);
         animation: none;
       }
-      .img-tick.done .star-3d {
+      .img-tick.done .star-emoji {
         display: block;
         animation: starIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both, starGlow 2.6s ease-in-out 0.6s infinite alternate;
       }
@@ -296,7 +298,7 @@
       @media (prefers-reduced-motion: reduce) {
         .bar-fill { transition: none; }
         .img-tick:not(.done) { animation: none; }
-        .img-tick.done .star-3d { animation: none; }
+        .img-tick.done .star-emoji { animation: none; }
         .img-tick.done .twinkles .tw { animation: none; opacity: 0; }
         .img-tick.bursting .burst .sp { animation: none; opacity: 0; }
       }
@@ -323,23 +325,6 @@
     </style>
   </head>
   <body>
-    <!-- Gradient dùng chung cho ngôi sao 3D (khai báo 1 lần để mọi ngôi sao tham chiếu) -->
-    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="starGold" x1="0%" y1="0%" x2="70%" y2="100%">
-          <stop offset="0%" stop-color="#fff6bf" />
-          <stop offset="28%" stop-color="#ffe45e" />
-          <stop offset="52%" stop-color="#ffc93c" />
-          <stop offset="78%" stop-color="#ff9f1c" />
-          <stop offset="100%" stop-color="#f07f13" />
-        </linearGradient>
-        <linearGradient id="starInner" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#fffde7" />
-          <stop offset="45%" stop-color="#ffec99" />
-          <stop offset="100%" stop-color="#ffd43b" />
-        </linearGradient>
-      </defs>
-    </svg>
     <main class="wrap">
       <header class="hero">
         <h1><span class="title-rainbow left" aria-hidden="true">🌈</span><span>Bảng kế hoạch của bé</span><span class="title-rainbow right" aria-hidden="true">🌈</span></h1>
@@ -606,18 +591,12 @@
       }
       document.getElementById("todayLabel").textContent = todayText();
 
-      /* Ngôi sao 3D kiểu emoji ⭐: cả 5 đầu sao đều BO TRÒN (không nhọn) —
-         mỗi đầu là một đường cong Q ôm qua đỉnh sao, thân sao mập và mềm như emoji;
-         vẫn giữ nguyên gradient vàng nhiều lớp tạo khối 3D, nửa trái sáng hơn,
-         sao nhỏ nổi ở giữa, điểm sáng bóng ở cánh trên trái và mọi hiệu ứng
-         nảy / phát sáng / tia lung linh quanh sao */
+      /* Dấu tick là ký tự emoji ⭐ THẬT (không vẽ SVG nữa): các đầu sao tròn
+         phồng đúng như emoji trên máy của bé. Khối 3D nổi do bóng đổ nhiều lớp
+         + phát sáng trong CSS (.star-emoji); vẫn giữ nguyên hiệu ứng nảy đàn
+         hồi khi tick, chùm tia sáng bung ra và tia nhỏ nhấp nháy quanh sao */
       var STAR_HTML =
-        "<svg class=\"star-3d\" viewBox=\"0 0 100 100\" aria-hidden=\"true\" focusable=\"false\">" +
-        "<path d=\"M46.7 14 Q50 6.5 53.3 14 L63 35 L85.5 37.2 Q93.5 38 87 42.8 L69 57 L74.3 81 Q76.5 89.5 69.5 84.5 L50 71 L30.5 84.5 Q23.5 89.5 25.7 81 L31 57 L13 42.8 Q6.5 38 14.5 37.2 L37 35 Z\" fill=\"url(#starGold)\" stroke=\"#b45309\" stroke-width=\"4\" stroke-linejoin=\"round\"/>" +
-        "<path d=\"M46.7 14 Q50 6.5 50 71 L30.5 84.5 Q23.5 89.5 25.7 81 L31 57 L13 42.8 Q6.5 38 14.5 37.2 L37 35 Z\" fill=\"#ffffff\" opacity=\"0.22\"/>" +
-        "<path d=\"M48.3 29.8 Q50 25.5 51.7 29.8 L57 41 L68.3 41.8 Q72.5 42 69 44.8 L60 53 L62.3 63.5 Q63.8 68 59.8 65 L50 59 L40.2 65 Q36.2 68 37.7 63.5 L40 53 L31 44.8 Q27.5 42 31.7 41.8 L43 41 Z\" fill=\"url(#starInner)\" stroke=\"url(#starInner)\" stroke-width=\"2\" stroke-linejoin=\"round\" opacity=\"0.92\"/>" +
-        "<ellipse cx=\"38\" cy=\"30\" rx=\"8.5\" ry=\"4.6\" transform=\"rotate(-32 38 30)\" fill=\"#ffffff\" opacity=\"0.75\"/>" +
-        "</svg>" +
+        "<span class=\"star-emoji\" aria-hidden=\"true\">⭐</span>" +
         "<span class=\"twinkles\" aria-hidden=\"true\"><i class=\"tw t1\">✦</i><i class=\"tw t2\">✦</i><i class=\"tw t3\">✧</i></span>";
       /* Chùm tia sáng bung ra khi tick: [bay ngang px, bay dọc px, cỡ, góc xoay, trễ giây] */
       var BURST_CFG = [
