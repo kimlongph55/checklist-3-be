@@ -363,7 +363,47 @@
       var TOTAL = 23;
       var API_URL = "https://script.google.com/macros/s/AKfycbzoAYQfoE3Sl6fTkYypLcr5xMzT8CGWvJpd7QUt6bVQgOlb6iA7lpXJquh4_Fxx3YHi/exec";
 
-      var state = { kid: 0, done: [{}, {}, {}] };
+      /* Nhớ bé đang chọn trên chính máy/trình duyệt này để load lại link
+         vẫn mở đúng tab bé đó, không quay về Hổ. Ưu tiên #be= trên link
+         (nếu có), sau đó tới lựa chọn đã lưu trên máy; lần đầu chưa có
+         gì thì mặc định Hổ (0). Tick vẫn lưu vào Sheet như cũ — phần này
+         chỉ nhớ tab đang xem, riêng từng máy. */
+      var LAST_KID_KEY = "bang-checklist-last-kid-v1";
+      var KID_SLUGS = ["ho", "nhim", "la"];
+      function kidFromHash() {
+        try {
+          var h = (window.location.hash || "").replace(/^#/, "");
+          var m = /(?:^|[&?])be=([a-z]+)/i.exec(h) || /^([a-z]+)$/i.exec(h);
+          if (!m) return -1;
+          var idx = KID_SLUGS.indexOf(m[1].toLowerCase());
+          return idx >= 0 ? idx : -1;
+        } catch (e) { return -1; }
+      }
+      function readLastKid() {
+        var fromHash = kidFromHash();
+        if (fromHash >= 0) return fromHash;
+        try {
+          var saved = window.localStorage.getItem(LAST_KID_KEY);
+          var n = Number(saved);
+          if (saved !== null && isFinite(n) && n >= 0 && n < KID_NAMES.length) return Math.floor(n);
+        } catch (e) {}
+        return 0;
+      }
+      function saveLastKid(idx) {
+        try { window.localStorage.setItem(LAST_KID_KEY, String(idx)); } catch (e) {}
+        try {
+          var target = "#be=" + KID_SLUGS[idx];
+          if (window.location.hash !== target && window.history && window.history.replaceState) {
+            window.history.replaceState(null, "", target);
+          }
+        } catch (e) {}
+      }
+
+      var state = { kid: readLastKid(), done: [{}, {}, {}] };
+      /* Mở bằng link #be=... thì ghi nhớ luôn lựa chọn đó cho lần mở sau */
+      if (kidFromHash() >= 0) {
+        try { window.localStorage.setItem(LAST_KID_KEY, String(state.kid)); } catch (e) {}
+      }
 
       /* Ngày hôm nay theo giờ Việt Nam, dạng YYYY-MM-DD để gọi API */
       function todayIso() {
@@ -623,8 +663,19 @@
       document.querySelectorAll(".kid-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
           state.kid = Number(btn.getAttribute("data-kid"));
+          saveLastKid(state.kid);
           render();
         });
+      });
+
+      /* Nếu mở link dạng #be=nhim / #be=la thì chuyển ngay tới bé đó */
+      window.addEventListener("hashchange", function () {
+        var idx = kidFromHash();
+        if (idx >= 0 && idx !== state.kid) {
+          state.kid = idx;
+          try { window.localStorage.setItem(LAST_KID_KEY, String(idx)); } catch (e) {}
+          render();
+        }
       });
 
       document.getElementById("resetBtn").addEventListener("click", function () {
