@@ -607,8 +607,10 @@
          (Hổ / Nhím / La); nếu không muốn hiện tên bé thì cứ xóa {name} đi.
          ===================================================================== */
       var REWARD_MESSAGE = "Chúc mừng {name} đã nhận được một phần thưởng tùy chọn không quá 50.000 đồng";
-      /* Số sao tuần tối thiểu để mở được quà (tối đa cả tuần là 105 sao) */
-      var GIFT_REQUIRED_STARS = 100;
+      /* Số sao tuần tối thiểu để mở được quà (tối đa cả tuần là 105 sao)
+         ⚠️ GIÁ TRỊ TEST TẠM THỜI: đang hạ xuống 0 để test phần thưởng ngay,
+         sẽ trả lại 100 ngay sau khi người dùng xác nhận đã xem phần thưởng. */
+      var GIFT_REQUIRED_STARS = 0;
 
       var GROUPS = [
         {
