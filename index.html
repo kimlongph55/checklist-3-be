@@ -161,6 +161,12 @@
         transition: width 0.45s ease;
       }
       .stars { margin-top: 8px; font-size: 1.15rem; min-height: 1.5em; display: flex; flex-wrap: wrap; gap: 3px; }
+      /* Trên phone: cả 15 ngôi sao tiến độ hôm nay phải nằm gọn trên 1 dòng
+         duy nhất — không xuống dòng, thu nhỏ sao và khoảng cách cho vừa */
+      @media (max-width: 680px) {
+        .stars { flex-wrap: nowrap; font-size: 0.92rem; gap: 1px; }
+        .stars span { white-space: nowrap; }
+      }
       .stars .off { opacity: 0.22; filter: grayscale(1); }
       .family-row {
         display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
@@ -176,6 +182,12 @@
         display: flex; justify-content: space-between; align-items: center; gap: 8px;
       }
       .family-chip .fc-count { color: var(--blue-deep); font-family: "Baloo 2", sans-serif; font-size: 1.15rem; }
+      /* Trên phone: mỗi bé một hàng riêng chiếm trọn chiều rộng (giống hàng
+         của La), tên bé và số sao 0/15 luôn ở trên cùng 1 dòng */
+      @media (max-width: 680px) {
+        .family-row { flex-direction: column; }
+        .family-chip { flex: none; width: 100%; }
+      }
       /* ---------- Thẻ tổng sao tuần (nằm dưới hàng icon 3 bé, vẫn trong thẻ tiến độ) ---------- */
       .week-card {
         margin-top: 12px;
@@ -223,6 +235,12 @@
       .week-chip .wc-count { color: #b45309; font-family: "Baloo 2", sans-serif; font-size: 1.15rem; white-space: nowrap; }
       @media (prefers-color-scheme: dark) { .week-chip .wc-count { color: #fbbf24; } }
       .week-chip.is-current { outline: 3px solid #f59e0b; outline-offset: 0; }
+      /* Trên phone: mỗi bé một hàng riêng chiếm trọn chiều rộng (giống hàng
+         của La), tên bé và số sao tuần luôn ở trên cùng 1 dòng */
+      @media (max-width: 680px) {
+        .week-row { flex-direction: column; }
+        .week-chip { flex: none; width: 100%; }
+      }
       .week-status { margin: 8px 0 0; font-size: 0.9rem; font-weight: 700; color: var(--text-soft); min-height: 1.3em; }
       .reset-btn {
         background: none; border: 2px solid var(--border); color: var(--text-soft);
